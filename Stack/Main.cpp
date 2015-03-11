@@ -3,19 +3,23 @@
 #include <string>
 #include <unordered_map>
 
+
 using namespace std;
 
 const string phoneMap[10] = {"$/*","abc","def","ghi","jkl","mno","pqr","stu","vwx","yz_"};
+int recCount = 0;
 
-static void printAll(string prefix, Stack digits) {
-    int top = digits.pop();
-    string a = prefix + phoneMap[top].at(0);
-    string b = prefix + phoneMap[top].at(1);
-    string c = prefix + phoneMap[top].at(2);
-    if(digits.topNode()) {
-        printAll(a,digits);
-        printAll(b,digits);
-        printAll(c,digits);
+static void printAll(string prefix, vector<int> digits, int index) {
+    recCount++;
+    int curr = digits[index];
+    string a = prefix + phoneMap[curr].at(0);
+    string b = prefix + phoneMap[curr].at(1);
+    string c = prefix + phoneMap[curr].at(2);
+    if(index < digits.size()-1) {
+        index++;
+        printAll(a,digits,index);
+        printAll(b,digits,index);
+        printAll(c,digits,index);
     } else {
         cout << a << ", ";
         cout << b << ", ";
@@ -34,18 +38,19 @@ int main() {
     stack.push(3);
     stack.push(0);
     int num = 0;
-    int phoneNum = 1928423;
-    Stack digits;
+    int phoneNum = 810781427;
+    vector<int> digits;
     while(phoneNum > 0) {
-        digits.push(phoneNum % 10);
+        digits.insert(digits.begin(),phoneNum % 10);
         phoneNum /= 10;
     }
 
-    printAll("", digits);
+    printAll("", digits, 0);
     /*while( stack.topNode() ) {
         cout << stack.pop() << endl;
         ++num;
     }*/
+    cout << endl << recCount;
     int n;
     cin >> n;
     return num;
