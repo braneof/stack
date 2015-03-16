@@ -66,6 +66,23 @@ bool insertAfter( Node *node, int data ) {
 }
 
 
+Node* mthToLast( int m ) {
+    if( !head ) return nullptr;  // null means not found, i think this works
+    Node *lookAheadM = head;
+    Node* mth = head;
+    for(int i = 0; i < m; i++) {
+        lookAheadM = lookAheadM->getNext();
+        if(!lookAheadM) return nullptr;
+    }
+    while( lookAheadM->getNext() ) {
+        lookAheadM = lookAheadM->getNext();
+        mth = mth->getNext();
+    }
+    return mth;
+}
+
+
+
 int main() {
     //Stack stack;
     //stack.push(3);
@@ -102,6 +119,11 @@ int main() {
     }
     cout << "Head and tail: " << head->value() << " " << tail->value() << endl;
     
+    cout << "0th to last " << mthToLast(0)->value() << endl;
+    cout << "4th to last " << mthToLast(4)->value() << endl;
+    cout << "6th to last " << mthToLast(6)->value() << endl;
+    cout << "7th to last " << mthToLast(7)->value() << endl;
+    cout << "8th to last " << mthToLast(8) << endl;
     //while( stack.topNode() ) {
     //    cout << stack.pop() << endl;
     //    ++num;
